@@ -5,7 +5,12 @@
 #include <QAbstractAudioDeviceInfo>
 #include <QCameraInfo>
 #include <QDebug>
+#include <string>
 
+/*
+** @brief DeviceInfo 设备信息类
+** func: Get capture audio and camera device name.
+*/
 class DeviceInfo
 {
 public:
@@ -13,7 +18,8 @@ public:
     ~DeviceInfo();
     QString get_audio_device_name();
     QString get_video_device_name();
-private:
+
+protected:
     //使用时需要将QString -> const char *  //[AudioDeviceInfo.toUtf8().data()]
     QString AudioDeviceInfo;
     QString VideoDeviceInfo;
