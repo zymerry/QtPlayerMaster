@@ -10,12 +10,16 @@ CONFIG += c++11
 
 SOURCES += \
     audiocapture.cpp \
+    audioencode.cpp \
+    audioresample.cpp \
     deviceinfo.cpp \
     main.cpp \
     qtplayermaster.cpp
 
 HEADERS += \
     audiocapture.h \
+    audioencode.h \
+    audioresample.h \
     deviceinfo.h \
     ffmpeg_media.h \
     qtplayermaster.h
