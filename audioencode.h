@@ -5,6 +5,10 @@
 #include <string>
 #include "ffmpeg_media.h"
 
+/*
+** @brief AudioEncode 音频编码类 输入frame 输出packet
+** first call audioEncodeInit() init Audio encode param and open encoder, then call audioEncode(), get a packet data.
+*/
 class AudioEncode
 {
     std::map<int, int> sample_index = {

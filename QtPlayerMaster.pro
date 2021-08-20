@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     audiocapture.cpp \
+    audiodecode.cpp \
     audioencode.cpp \
     audioresample.cpp \
     deviceinfo.cpp \
@@ -18,6 +19,7 @@ SOURCES += \
 
 HEADERS += \
     audiocapture.h \
+    audiodecode.h \
     audioencode.h \
     audioresample.h \
     deviceinfo.h \
