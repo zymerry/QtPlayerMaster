@@ -9,19 +9,27 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    audiocapture.cpp \
-    audiodecode.cpp \
-    audioencode.cpp \
-    audioresample.cpp \
+    audio/src/audiocapture.cpp \
+    audio/src/audiocapture.cpp \
+    audio/src/audiodecode.cpp \
+    audio/src/audiodecode.cpp \
+    audio/src/audioencode.cpp \
+    audio/src/audioencode.cpp \
+    audio/src/audioresample.cpp \
+    audio/src/audioresample.cpp \
     deviceinfo.cpp \
     main.cpp \
     qtplayermaster.cpp
 
 HEADERS += \
-    audiocapture.h \
-    audiodecode.h \
-    audioencode.h \
-    audioresample.h \
+    audio/include/audiocapture.h \
+    audio/include/audiodecode.h \
+    audio/include/audioencode.h \
+    audio/include/audioresample.h \
+    audio/src/audiocapture.h \
+    audio/src/audiodecode.h \
+    audio/src/audioencode.h \
+    audio/src/audioresample.h \
     deviceinfo.h \
     ffmpeg_media.h \
     qtplayermaster.h
