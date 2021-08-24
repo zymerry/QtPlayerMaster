@@ -68,7 +68,6 @@ int AudioDecode::AudioDecodePacket(AVPacket *src_packet, AVFrame **dst_frame)
             }
         }
         //获取到一个packet
-        break;
     }
     *dst_frame = dec_frame;
     av_packet_unref(src_packet);

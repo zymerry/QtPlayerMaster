@@ -10,35 +10,30 @@ CONFIG += c++11
 
 SOURCES += \
     audio/src/audiocapture.cpp \
-    audio/src/audiocapture.cpp \
-    audio/src/audiodecode.cpp \
     audio/src/audiodecode.cpp \
     audio/src/audioencode.cpp \
-    audio/src/audioencode.cpp \
-    audio/src/audioresample.cpp \
     audio/src/audioresample.cpp \
     deviceinfo.cpp \
     main.cpp \
-    qtplayermaster.cpp
+    qtplayermaster.cpp \
+    videocapture.cpp
 
 HEADERS += \
     audio/include/audiocapture.h \
     audio/include/audiodecode.h \
     audio/include/audioencode.h \
     audio/include/audioresample.h \
-    audio/src/audiocapture.h \
-    audio/src/audiodecode.h \
-    audio/src/audioencode.h \
-    audio/src/audioresample.h \
     deviceinfo.h \
     ffmpeg_media.h \
-    qtplayermaster.h
+    qtplayermaster.h \
+    videocapture.h
 
 FORMS += \
     qtplayermaster.ui
 
 ######ffmpeg库相关####################################
 INCLUDEPATH+=C:/qtplayer/ffmpeg-win64/include
+INCLUDEPATH+=audio/include
 LIBS+=C:/qtplayer/ffmpeg-win64/lib/libavcodec.dll.a\
       C:/qtplayer/ffmpeg-win64/lib/libavdevice.dll.a\
       C:/qtplayer/ffmpeg-win64/lib/libavfilter.dll.a\
