@@ -1,7 +1,7 @@
 #include "videocapture.h"
 
 VideoCapture::VideoCapture(int _width, int _height, AVPixelFormat _pix_fmt, int _fps)
-    :width(_width), height(_height), fps(_fps), pix_fmt(_pix_fmt)
+    :width(_width), height(_height), fps(_fps), cap_pix_fmt(_pix_fmt), out_pix_fmt(AV_PIX_FMT_YUV420P)
 {
 
 }
@@ -14,9 +14,50 @@ VideoCapture::~VideoCapture()
 int VideoCapture::VideoCaptureInit()
 {
     //1、创建frame
+    cap_frame = CreateFrame(width, height, cap_pix_fmt);
+    sw_frame = CreateFrame(width, height, out_pix_fmt);
 
     //2、创建packet
+    pkt = av_packet_alloc();
+    av_init_packet(pkt);
+
+    //3、初始化图像转换 yuyv422->yuv420p (因为采集的是yuyv422, h264编码时需要yuv420p)
+    int sws_flags = SWS_BICUBIC; //差值算法,双三次
+    //设置转换context
+    if (img_convert_ctx == nullptr)
+    {
+        img_convert_ctx = sws_getContext(width, height,
+            (AVPixelFormat)cap_pix_fmt,
+            width,
+            height,
+            (AVPixelFormat)out_pix_fmt,
+            sws_flags, NULL, NULL, NULL);
+        if (img_convert_ctx == NULL)
+        {
+            av_log(NULL, AV_LOG_ERROR, "Cannot initialize the conversion context\n");
+            return -1;
+        }
+    }
+
+    //4、打开video device
+    OpenVideoDevice();
     return 0;
+}
+
+int VideoCapture::VideoCaptureDeinit()
+{
+    if (cap_frame) {
+        DestoryFrame(&cap_frame);
+        cap_frame = nullptr;
+    }
+    if (sw_frame) {
+        DestoryFrame(&sw_frame);
+        sw_frame = nullptr;
+    }
+
+    av_packet_free(&pkt);
+
+    CloseVideoDevice();
 }
 
 int VideoCapture::OpenVideoDevice()
@@ -38,28 +79,64 @@ int VideoCapture::OpenVideoDevice()
     return 0;
 }
 
-int VideoCapture::CreateEncFrame()
+int VideoCapture::CloseVideoDevice()
+{
+    if (fmt_ctx) {
+        avformat_close_input(&fmt_ctx);
+    }
+    return 0;
+}
+
+int VideoCapture::VideoCaptureFrame(AVFrame **out_frame)
+{
+        int ret = 0;
+        int numBytes = 0;
+        uint8_t *out_buffer = nullptr;
+
+        numBytes = avpicture_get_size(out_pix_fmt, width, width);
+        out_buffer = (uint8_t *) av_malloc(numBytes * sizeof(uint8_t));
+
+        //读取一帧数据到pkt
+        av_read_frame(fmt_ctx, pkt);
+
+        ret = avpicture_fill((AVPicture*)out_frame, out_buffer, (AVPixelFormat)out_pix_fmt, 1280, 720);
+        ret = avpicture_fill((AVPicture*)cap_frame, (unsigned char*)pkt->data, (AVPixelFormat)cap_pix_fmt, 1280, 720);
+
+        //yuyv422 -> yuv420p
+        ret = sws_scale(img_convert_ctx, cap_frame->data, cap_frame->linesize,
+            0, height, sw_frame->data, sw_frame->linesize);
+
+        *out_frame = sw_frame;
+}
+
+AVFrame* VideoCapture::CreateFrame(int w, int h, AVPixelFormat pix_fmt)
 {
     int ret = -1;
-    enc_frame = av_frame_alloc();
-    if (!enc_frame)
+    AVFrame *frame = nullptr;
+    frame = av_frame_alloc();
+    if (!frame)
     {
         printf("Error, No Memory!\n");
-        return ret;
+        return nullptr;
     }
 
     //设置参数
-    enc_frame->width = width;
-    enc_frame->height = height;
-    enc_frame->format = pix_fmt;
+    frame->width = w;
+    frame->height = h;
+    frame->format = pix_fmt;
 
     //alloc inner memory
-    ret = av_frame_get_buffer(enc_frame, 32); //按32位对齐 【视频必须是32位对齐】
+    ret = av_frame_get_buffer(frame, 32); //按32位对齐 【视频必须是32位对齐】
     if (ret < 0)
     {
         printf("Error, Failed to alloc buffer for frame!\n");
-        return ret;
+        return nullptr;
     }
 
-    return ret;
+    return frame;
+}
+
+int VideoCapture::DestoryFrame(AVFrame **frame)
+{
+    av_frame_free(frame);
 }
