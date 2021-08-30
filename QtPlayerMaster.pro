@@ -16,9 +16,10 @@ SOURCES += \
     deviceinfo.cpp \
     main.cpp \
     qtplayermaster.cpp \
-    videocapture.cpp \
-    videodecode.cpp \
-    videoencode.cpp
+    video/src/videocapture.cpp \
+    video/src/videodecode.cpp \
+    video/src/videoencode.cpp
+
 
 HEADERS += \
     audio/include/audiocapture.h \
@@ -28,9 +29,10 @@ HEADERS += \
     deviceinfo.h \
     ffmpeg_media.h \
     qtplayermaster.h \
-    videocapture.h \
-    videodecode.h \
-    videoencode.h
+    video/include/videocapture.h \
+    video/include/videodecode.h \
+    video/include/videoencode.h
+
 
 FORMS += \
     qtplayermaster.ui
@@ -38,6 +40,7 @@ FORMS += \
 ######ffmpeg库相关####################################
 INCLUDEPATH+=C:/qtplayer/ffmpeg-win64/include
 INCLUDEPATH+=audio/include
+INCLUDEPATH+=video/include
 LIBS+=C:/qtplayer/ffmpeg-win64/lib/libavcodec.dll.a\
       C:/qtplayer/ffmpeg-win64/lib/libavdevice.dll.a\
       C:/qtplayer/ffmpeg-win64/lib/libavfilter.dll.a\
