@@ -107,7 +107,7 @@ int VideoEncode::VideoEncodePkt(AVFrame *frame, AVPacket **out_pkt)
             av_log(NULL, AV_LOG_ERROR, "error, failed to encode.\n");
             break;
         }
-        //outfile输出h264的编码
+        //输出pkt
         *out_pkt = enc_pkt;
         //av_packet_unref(newpkt);//减少newpkt的引用计数
     }

@@ -17,6 +17,7 @@ SOURCES += \
     main.cpp \
     qtplayermaster.cpp \
     videocapture.cpp \
+    videodecode.cpp \
     videoencode.cpp
 
 HEADERS += \
@@ -28,6 +29,7 @@ HEADERS += \
     ffmpeg_media.h \
     qtplayermaster.h \
     videocapture.h \
+    videodecode.h \
     videoencode.h
 
 FORMS += \
