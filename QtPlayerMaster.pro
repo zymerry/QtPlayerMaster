@@ -13,6 +13,7 @@ SOURCES += \
     audio/src/audiodecode.cpp \
     audio/src/audioencode.cpp \
     audio/src/audioresample.cpp \
+    common/src/avdeque.cpp \
     deviceinfo.cpp \
     main.cpp \
     qtplayermaster.cpp \
@@ -26,6 +27,7 @@ HEADERS += \
     audio/include/audiodecode.h \
     audio/include/audioencode.h \
     audio/include/audioresample.h \
+    common/include/avdeque.h \
     deviceinfo.h \
     ffmpeg_media.h \
     qtplayermaster.h \
@@ -41,6 +43,7 @@ FORMS += \
 INCLUDEPATH+=C:/qtplayer/ffmpeg-win64/include
 INCLUDEPATH+=audio/include
 INCLUDEPATH+=video/include
+INCLUDEPATH+=common/include
 LIBS+=C:/qtplayer/ffmpeg-win64/lib/libavcodec.dll.a\
       C:/qtplayer/ffmpeg-win64/lib/libavdevice.dll.a\
       C:/qtplayer/ffmpeg-win64/lib/libavfilter.dll.a\
