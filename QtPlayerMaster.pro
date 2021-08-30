@@ -16,7 +16,8 @@ SOURCES += \
     deviceinfo.cpp \
     main.cpp \
     qtplayermaster.cpp \
-    videocapture.cpp
+    videocapture.cpp \
+    videoencode.cpp
 
 HEADERS += \
     audio/include/audiocapture.h \
@@ -26,7 +27,8 @@ HEADERS += \
     deviceinfo.h \
     ffmpeg_media.h \
     qtplayermaster.h \
-    videocapture.h
+    videocapture.h \
+    videoencode.h
 
 FORMS += \
     qtplayermaster.ui

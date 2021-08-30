@@ -4,6 +4,11 @@
 #include "deviceinfo.h"
 #include "ffmpeg_media.h"
 
+/*
+** @brief VideoCapture 视频采集类 输出cap_frame
+** first call VideoCaptureInit() init video-capture param and open video-capture device, then call VideoCaptureFrame(), get a frame data.
+** windows下需要使用【ffmpeg -list_options true -f dshow -i video="Integrated Webcam"】命令查看支持的采集参数
+*/
 class VideoCapture : public DeviceInfo
 {
 public:
